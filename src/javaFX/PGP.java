@@ -72,23 +72,10 @@ public class PGP {
 			RSAKeyPairGenerator kpg = new RSAKeyPairGenerator();
 			kpg.init(new RSAKeyGenerationParameters(BigInteger.valueOf(0x10001), new SecureRandom(), 2048, 12));
 			PGPKeyPair privateRSAKey = new BcPGPKeyPair(PGPPublicKey.RSA_SIGN, kpg.generateKeyPair(), new Date());
-			//PGPKeyPair publicRSAKey = new BcPGPKeyPair(PGPPublicKey.RSA_ENCRYPT, kpg.generateKeyPair(), new Date());
-			
-			
-			//PGPKeyPair masterKey = new BcPGPKeyPair(PGPPublicKey.RSA_ENCRYPT, kpg.generateKeyPair(), new Date());
-			
-			//System.out.println("2. Creating digest...");
-			//PGPDigestCalculator digest = new JcaPGPDigestCalculatorProviderBuilder().build().get(HashAlgorithmTags.SHA1);
-			//System.out.println("3. Generating key ring generator");
-			//PGPKeyRingGenerator keyRingGen = new PGPKeyRingGenerator(3, masterKey, ID, digest, null , null, new JcaPGPContentSignerBuilder(masterKey.getPublicKey().getAlgorithm(), HashAlgorithmTags.SHA1), new JcePBESecretKeyEncryptorBuilder(PGPEncryptedData.AES_256, digest).setProvider("BC").build(passphrase));
-			//System.out.println("4. Adding key pair to key ring");
-			//keyRingGen.addSubKey(privateRSAKey);
-			
 		
 			File input_file = new File(file_in);
 			File output_file = new File(file_out);
 			System.out.println("3. Signing " + file_in);
-			//PGPPublicKeyRingCollection publicKeyRingsCollection = new PGPPublicKeyRingCollection(null);
 			signFile(privateRSAKey, input_file, output_file, passphrase, true);
 			System.out.println("4. File has now been signed");
 			System.out.println("5. File is about to be verified");
@@ -100,7 +87,6 @@ public class PGP {
 			PGPKeyPair sigPubKey = new BcPGPKeyPair(PGPPublicKey.RSA_ENCRYPT, kpg.generateKeyPair(), new Date());
 			System.out.println("7. Checking if someone elses public key can verify the signature, should return false.");
 			checkSignature(sigPubKey.getPublicKey(), signature_file);
-			//checkSignature(privateRSAKey.getPublicKey(), signature_file);
 			System.out.println("8. Different public key finished verifying, should have returned false");
 		
 			
@@ -156,7 +142,7 @@ public class PGP {
 		public static boolean checkSignature(PGPPublicKey pgpPublicKey, File file_in) throws Exception {
 			
 			PGPPublicKey publicKey = pgpPublicKey;
-			
+		
 			InputStream inputStream = PGPUtil.getDecoderStream(new FileInputStream(file_in));
 	         
 	        PGPObjectFactory pgpObjFactory = new PGPObjectFactory(inputStream, null);
@@ -173,11 +159,6 @@ public class PGP {
 	        PGPLiteralData pgpLiteralData = (PGPLiteralData)pgpObjFactory.nextObject();
 	        InputStream literalDataStream = pgpLiteralData.getInputStream();
 	         
-	       // FileInputStream keyIn = new FileInputStream(file_in);
-	        
-	       // PGPPublicKeyRingCollection pgpRing = new PGPPublicKeyRingCollection(PGPUtil.getDecoderStream(keyIn));
-	      
-	       // PGPPublicKey key = pgpRing.getPublicKey(onePassSignature.getKeyID());
 	        onePassSignature.init(new JcaPGPContentVerifierBuilderProvider().setProvider("BC"), publicKey);
 	        FileOutputStream literalDataOutputStream = new FileOutputStream(pgpLiteralData.getFileName());
 	        

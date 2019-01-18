@@ -65,11 +65,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 public class JavaFX extends Application {
-
-	//private static final Object NodeObject = null;
-	//private static final String KEYSTORE_FILE = "";
-	//private static final String KEYSTORE_INSTANCE = "PKCS12";
-	//private char password[] = "password".toCharArray();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -184,8 +179,8 @@ public class JavaFX extends Application {
 		signFile.setOnAction(event -> {
 			password.getText();
 			char[] passphrase = password.getText().toCharArray();
-			//PGP pgp = new PGP();
 			File file_out = new File("signedFileJavaFX");
+			
 			try {
 				signFile(privateRSAKey, fileArray.get(0), file_out, passphrase, true);
 			} catch (PGPException e) {
@@ -219,13 +214,6 @@ public class JavaFX extends Application {
 		
 		checkSignatureCorrectPubKey.setOnAction(event -> {
 			File signature = fileArray.get(1);
-			/*try {
-				checkSignature(wrongPubKey.getPublicKey(), signature);
-				signatureVerificationFalse.setText("wrongPubKey");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 			
 			try {
 				checkSignature(privateRSAKey.getPublicKey(), signature);

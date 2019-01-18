@@ -47,11 +47,4 @@ public class Client {
 
 	}
 	
-	public void sendFile(File file, Socket socket) {
-		
-		File transferFile = file;
-		
-		
-	}
-
 }

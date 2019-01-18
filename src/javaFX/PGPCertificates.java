@@ -22,15 +22,6 @@ public class PGPCertificates {
 		Security.addProvider(new BouncyCastleProvider());
 		File publicKeyFilename = new File("public_key.txt");
 		File privateKeyFilename = new File("private_key.txt");
-		
-	//	PGPCertificates generateRSAKeys = new PGPCertificates();
-		//generateRSAKeys.generateKeyPair(publicKeyFilename, privateKeyFilename);
-		//generateCertificate();
-		//BouncyCastleProvider bc_provider = new BouncyCastleProvider();
-	//	Security.addProvider(bc_provider);
-		
-		
-		
 	}
 	
 	public void genCert(PGPKeyPair keyPair, String subject) throws IOException {
@@ -45,14 +36,6 @@ public class PGPCertificates {
 		calendar.add(Calendar.YEAR, 1);
 		
 		Date endDate = (Date) calendar.getTime();
-		
-		//@SuppressWarnings("deprecation")
-		//X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
-		
-		//certGen.setSerialNumber(serialNumber);
-		//certGen.setSubjectUniqueID(subject);
-		//X509V1CertificateGenerator certificateGen = new X509V1CertificateGenerator();
-		
 	}
 		
 }
